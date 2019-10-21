@@ -116,7 +116,7 @@ $("#categoryFilter").on("change", function() {
 // 7th: wire up click event on the delete button of a given row; on click delete that budgetItem
 $("#budgetItems").on("click", ".delete", function() {
     const id = parseInt($(this).parents("tr").data("id")); // is a string
-    // alert(id);
+    // alert("id: ", id);
 
     const remainingItems = budgetItems.filter(item => item.id !== id);
     budgetItems = remainingItems;
