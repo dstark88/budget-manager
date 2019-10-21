@@ -37,12 +37,16 @@ const renderItems = (items) => {
     tbody.empty();
     // loo through items array, make one row per item
     items.forEach(item => {
+        // console.lot("type of amount: " + typeof item.amount);
         const row = `<tr data-id=${item.id}><td>${item.date}</td><td>${item.name}
-        </td><td>${item.category}</td><td>${item.amount}</td><td>${item.notes}
+        </td><td>${item.category}</td><td>$${parseFloat(item.amount).toFixed(2)}</td><td>${item.notes}
         </td><td class="delete"><span>x</span></td></tr>`
         tbody.append(row);
     });
-
+    // .reduce take an array and reduces it down to a single val based on the logic you speify
+    const total = items.reduce((accum, item) => accum + parseFloat(item.amount), 0);
+    console.log("total: ", total);
+    $("#total").text(`$${total.toFixed(2)}`)
     // etc
 }
 
@@ -97,7 +101,12 @@ $("#addItem").on("click", function(event) {
 });
 
 // 6th: wire up change event on the category select menu, show filtered budgetItems based on selection
-
+$("#categoryFilter").on("change", function() {
+    const category = $(this).val();
+    // alert(category);
+    const filteredItems = budgetItems.filter(item => item.category === category);
+    renderItems(filteredItems);
+});
 
 // 7th: wire up click event on the delete button of a given row; on click delete that budgetItem
 
